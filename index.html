@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jashn-e-Fabric | Unfold the Fabric of Fashion</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+/>
+
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="Jashn-e-Fabric Logo">
+      <span>JASHN-E-FABRIC</span>
+    </div>
+    <nav>
+      <a href="/jashn-e-fabric/index.html">Home</a>
+      <a href="/jashn-e-fabric/shop.html">Shop</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Unfold the Fabric of Fashion</h1>
+      <p>Where tradition meets timeless elegance.</p>
+      <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="shop-btn">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- Featured Slider -->
+  <section class="featured">
+    <h2>Featured Collection</h2>
+    <div class="slider">
+      <div class="slides">
+        <img src="images/img1.png" alt="Fabric 1">
+        <img src="images/img1.png" alt="Fabric 2">
+        <img src="images/img1.png" alt="Fabric 3">
+        <img src="images/img1.png" alt="Fabric 4">
+        <img src="images/img1.png" alt="Fabric 5">
+        <img src="images/img1.png" alt="Fabric 6">
+        <img src="images/img1.png" alt="Fabric 7">
+        <img src="images/img1.png" alt="Fabric 8">
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <p>&copy; 2025 Jashn-e-Fabric | Unfold the Fabric of Fashion</p>
+    <div class="social-icons">
+      <a href="https://instagram.com/jashn-e-fabric" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com/jashn-e-fabric" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://youtube.com/jashn-e-fabric" target="_blank"><i class="fab fa-youtube"></i></a>
+      <a href="https://www.meesho.com/jashn-e-fabric" target="_blank"><i class="fas fa-store"></i></a>
+      <a href="https://wa.me/918299743389" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://wa.me/c/918299743389" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://wa.me/c/918299743389" target="_blank">
+  <img src="whatsapp_icon.png" alt="WhatsApp Catalog" style="width: 50px; height: 50px;">
+</a>
+    </div>
+  </footer>
+
+  <script>
+    // Slider Auto Scroll
+    let slideIndex = 0;
+    const slides = document.querySelector('.slides');
+    const totalSlides = slides.children.length;
+
+    setInterval(() => {
+      slideIndex = (slideIndex + 1) % totalSlides;
+      slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+    }, 3000);
+  </script>
+</body>
+</html>
