@@ -1,83 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jashn-e-Fabric | Unfold the Fabric of Fashion</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
-  <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-/>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
 
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="jashn_e_fabric">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>jashn_e_fabric</title>
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">
-      <img src="images/logo.png" alt="Jashn-e-Fabric Logo">
-      <span>JASHN-E-FABRIC</span>
-    </div>
-    <nav>
-      <a href="/jashn-e-fabric/index.html">Home</a>
-      <a href="/jashn-e-fabric/shop.html">Shop</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Unfold the Fabric of Fashion</h1>
-      <p>Where tradition meets timeless elegance.</p>
-      <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="shop-btn">Shop Now</a>
-    </div>
-  </section>
-
-  <!-- Featured Slider -->
-  <section class="featured">
-    <h2>Featured Collection</h2>
-    <div class="slider">
-      <div class="slides">
-        <img src="images/img1.png" alt="Fabric 1">
-        <img src="images/img1.png" alt="Fabric 2">
-        <img src="images/img1.png" alt="Fabric 3">
-        <img src="images/img1.png" alt="Fabric 4">
-        <img src="images/img1.png" alt="Fabric 5">
-        <img src="images/img1.png" alt="Fabric 6">
-        <img src="images/img1.png" alt="Fabric 7">
-        <img src="images/img1.png" alt="Fabric 8">
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer id="contact">
-    <p>&copy; 2025 Jashn-e-Fabric | Unfold the Fabric of Fashion</p>
-    <div class="social-icons">
-      <a href="https://instagram.com/jashn-e-fabric" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://facebook.com/jashn-e-fabric" target="_blank"><i class="fab fa-facebook"></i></a>
-      <a href="https://youtube.com/jashn-e-fabric" target="_blank"><i class="fab fa-youtube"></i></a>
-      <a href="https://www.meesho.com/jashn-e-fabric" target="_blank"><i class="fas fa-store"></i></a>
-      <a href="https://wa.me/918299743389" target="_blank"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://wa.me/c/918299743389" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://wa.me/c/918299743389" target="_blank">
-  <img src="whatsapp_icon.png" alt="WhatsApp Catalog" style="width: 50px; height: 50px;">
-</a>
-    </div>
-  </footer>
-
-  <script>
-    // Slider Auto Scroll
-    let slideIndex = 0;
-    const slides = document.querySelector('.slides');
-    const totalSlides = slides.children.length;
-
-    setInterval(() => {
-      slideIndex = (slideIndex + 1) % totalSlides;
-      slides.style.transform = `translateX(-${slideIndex * 100}%)`;
-    }, 3000);
-  </script>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

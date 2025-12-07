@@ -1,0 +1,6 @@
+# Ignore build artifacts that shouldn't be committed
+.last_build_id
+
+# If you want to track everything else, leave this file empty
+# or remove it entirely
+
