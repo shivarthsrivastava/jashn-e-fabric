@@ -24,8 +24,8 @@ class AboutPage extends StatelessWidget {
             const SizedBox(height: 50),
             _buildBrandStory(),
             const SizedBox(height: 50),
-            _buildImageDivider(),
-            const SizedBox(height: 50),
+            // You may implement _buildImageDivider() and use it here, or simply remove it if not needed.
+            // Removed _buildImageDivider() due to missing method.
             const AppFooter(),
           ],
         ),
