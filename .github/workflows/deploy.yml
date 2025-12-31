@@ -1,5 +1,6 @@
 name: Deploy Flutter Web to GitHub Pages
 
+# This workflow builds and deploys the Flutter web app to GitHub Pages
 on:
   push:
     branches:
