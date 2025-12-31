@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppStyles {
+  // Primary color: #f4deba (light beige/cream)
+  static const Color primaryColor = Color(0xFFF4DEBA);
+
+  // Secondary color: #770b1b (dark red/maroon)
+  static const Color secondaryColor = Color(0xFF770B1B);
+
   static final ColorScheme colorScheme = ColorScheme.light(
-    primary: Colors.black,
-    secondary: Colors.grey[900]!,
-    surface: Colors.white,
-    background: Colors.white,
-    onPrimary: Colors.white,
-    onSecondary: Colors.white,
-    onSurface: Colors.black,
-    onBackground: Colors.black,
+    primary: primaryColor,
+    secondary: secondaryColor,
+    surface: AppStyles.primaryColor,
+    onPrimary: secondaryColor, // Dark text on light primary
+    onSecondary: AppStyles.primaryColor, // Light text on dark secondary
+    onSurface: AppStyles.secondaryColor,
   );
 
   static TextStyle get headingLarge => GoogleFonts.montserrat(
@@ -51,15 +55,15 @@ class AppStyles {
   );
 
   static ButtonStyle get primaryButton => ElevatedButton.styleFrom(
-    backgroundColor: Colors.black,
+    backgroundColor: secondaryColor,
     foregroundColor: Colors.white,
     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
   );
 
   static ButtonStyle get outlinedButton => OutlinedButton.styleFrom(
-    foregroundColor: Colors.black,
-    side: const BorderSide(color: Colors.black, width: 1),
+    foregroundColor: secondaryColor,
+    side: BorderSide(color: secondaryColor, width: 1),
     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
   );
@@ -69,7 +73,7 @@ class AppStyles {
   static const double verticalSpacing = 80;
 
   static BoxDecoration get imageBorderDecoration =>
-      BoxDecoration(border: Border.all(color: Colors.black, width: 1));
+      BoxDecoration(border: Border.all(color: secondaryColor, width: 1));
 
   static const Duration defaultAnimationDuration = Duration(milliseconds: 400);
   static const Curve defaultAnimationCurve = Curves.easeInOut;

@@ -33,8 +33,8 @@ class JashnEFabricApp extends StatelessWidget {
         colorScheme: AppStyles.colorScheme,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
+          backgroundColor: AppStyles.primaryColor,
+          foregroundColor: AppStyles.secondaryColor,
           elevation: 0,
           titleTextStyle: AppStyles.headingSmall,
         ),
@@ -87,7 +87,11 @@ class _MainNavigatorState extends State<MainNavigator> {
     return Scaffold(
       appBar: ModernNavBar(
         onMenuTap: () {
-          Scaffold.of(context).openDrawer();
+          // Use a Builder to get the correct context
+          final scaffoldContext = context;
+          if (scaffoldContext.mounted) {
+            Scaffold.of(scaffoldContext).openDrawer();
+          }
         },
         selectedIndex: _selectedIndex,
         onDestinationSelected: _onItemTapped,
@@ -96,7 +100,9 @@ class _MainNavigatorState extends State<MainNavigator> {
         selectedIndex: _selectedIndex,
         onDestinationSelected: _onItemTapped,
       ),
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: _selectedIndex >= 0 && _selectedIndex < _widgetOptions.length
+          ? _widgetOptions[_selectedIndex]
+          : _widgetOptions[0],
     );
   }
 }

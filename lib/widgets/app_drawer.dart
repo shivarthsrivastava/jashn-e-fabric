@@ -17,12 +17,12 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: [
           DrawerHeader(
-            decoration: BoxDecoration(color: AppStyles.colorScheme.primary),
+            decoration: BoxDecoration(color: AppStyles.secondaryColor),
             child: Center(
               child: Text(
                 'JASHN-E-FABRIC',
                 style: AppStyles.headingSmall.copyWith(
-                  color: Colors.white,
+                  color: AppStyles.primaryColor,
                   fontSize: 24,
                   letterSpacing: 2,
                 ),
@@ -53,17 +53,17 @@ class AppDrawer extends StatelessWidget {
             title: 'Contact',
             index: 3,
           ),
-          const Spacer(),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.shopping_bag_outlined),
-            title: const Text('Cart'),
-            onTap: () {
-              // TODO: Implement cart functionality
+          // const Spacer(),
+          // const Divider(),
+          // ListTile(
+          //   leading: const Icon(Icons.shopping_bag_outlined),
+          //   title: const Text('Cart'),
+          //   onTap: () {
+          //     // TODO: Implement cart functionality
 
-              Navigator.pop(context);
-            },
-          ),
+          //     Navigator.pop(context);
+          //   },
+          // ),
         ],
       ),
     );
@@ -78,14 +78,11 @@ class AppDrawer extends StatelessWidget {
     final isSelected = selectedIndex == index;
 
     return ListTile(
-      leading: Icon(
-        icon,
-        color: isSelected ? AppStyles.colorScheme.primary : null,
-      ),
+      leading: Icon(icon, color: isSelected ? AppStyles.secondaryColor : null),
       title: Text(
         title,
         style: AppStyles.bodyMedium.copyWith(
-          color: isSelected ? AppStyles.colorScheme.primary : null,
+          color: isSelected ? AppStyles.secondaryColor : null,
           fontWeight: isSelected ? FontWeight.bold : null,
         ),
       ),

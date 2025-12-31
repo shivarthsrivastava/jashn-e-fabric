@@ -19,12 +19,18 @@ class ModernNavBar extends StatelessWidget implements PreferredSizeWidget {
     final isDesktop = ResponsiveBreakpoints.of(context).largerThan(TABLET);
 
     return Container(
-      color: Colors.white,
+      color: AppStyles.primaryColor,
       child: SafeArea(
         child: Container(
           height: kToolbarHeight,
-          decoration: const BoxDecoration(
-            border: Border(bottom: BorderSide(color: Colors.black12, width: 1)),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                // ignore: deprecated_member_use
+                color: AppStyles.secondaryColor.withOpacity(0.2),
+                width: 1,
+              ),
+            ),
           ),
           child: Row(
             children: [
@@ -46,13 +52,6 @@ class ModernNavBar extends StatelessWidget implements PreferredSizeWidget {
                 _buildDesktopMenu(),
                 const SizedBox(width: 24),
               ],
-              IconButton(
-                icon: const Icon(Icons.shopping_bag_outlined),
-                onPressed: () {
-                  // TODO: Implement cart functionality
-                },
-              ),
-              const SizedBox(width: 8),
             ],
           ),
         ),
@@ -112,7 +111,7 @@ class _NavBarItem extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: isSelected ? Colors.black : Colors.transparent,
+              color: isSelected ? AppStyles.secondaryColor : Colors.transparent,
               width: 2,
             ),
           ),
@@ -120,7 +119,7 @@ class _NavBarItem extends StatelessWidget {
         child: Text(
           title,
           style: AppStyles.buttonText.copyWith(
-            color: isSelected ? Colors.black : Colors.grey,
+            color: isSelected ? AppStyles.secondaryColor : Colors.grey,
             fontSize: 14,
           ),
         ),

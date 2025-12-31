@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../widgets/app_footer.dart';
+import '../styles/app_styles.dart';
 import 'dart:async';
-import 'package:shimmer/shimmer.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:animations/animations.dart';
 import 'package:spring/spring.dart';
 
@@ -15,14 +14,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final PageController _pageController = PageController();
   int _currentPage = 0;
-  final int _previousPage = 0;
   Timer? _timer;
-  final springController = SpringController();
   final SpringController _springController = SpringController();
-
-  get item => null;
 
   @override
   void initState() {
@@ -33,27 +27,23 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _timer?.cancel();
-    _pageController.dispose();
     super.dispose();
   }
 
-  Widget _buildCarouselPage(Map<String, String> item, double screenWidth) {
+  Widget _buildCarouselPage(
+    Map<String, String> item,
+    double screenWidth, {
+    Key? key,
+  }) {
     return Stack(
+      key: key,
       fit: StackFit.expand,
       children: [
-        // Image with shimmer loading effect
-        CachedNetworkImage(
-          imageUrl: item['image']!,
+        // Image
+        Image.asset(
+          item['image']!,
           fit: BoxFit.cover,
-          fadeInDuration: const Duration(milliseconds: 500),
-          fadeOutDuration: const Duration(milliseconds: 500),
-          placeholder: (context, url) => Shimmer.fromColors(
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[100]!,
-            period: const Duration(milliseconds: 1500),
-            child: Container(color: Colors.white),
-          ),
-          errorWidget: (context, url, error) => Container(
+          errorBuilder: (context, error, stackTrace) => Container(
             color: Colors.grey[200],
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -76,9 +66,9 @@ class _HomePageState extends State<HomePage> {
               end: Alignment.bottomCenter,
               colors: [
                 // ignore: deprecated_member_use
-                Colors.black.withOpacity(0.4),
+                AppStyles.secondaryColor.withOpacity(0.4),
                 // ignore: deprecated_member_use
-                Colors.black.withOpacity(0.2),
+                AppStyles.secondaryColor.withOpacity(0.2),
               ],
             ),
           ),
@@ -104,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontSize: screenWidth > 600 ? 50.0 : 32.0,
-                      color: Colors.white,
+                      color: AppStyles.primaryColor,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 2,
                     ),
@@ -123,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontSize: screenWidth > 600 ? 24.0 : 18.0,
-                      color: Colors.white,
+                      color: AppStyles.primaryColor,
                       letterSpacing: 1,
                     ),
                   ),
@@ -132,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                 OutlinedButton(
                   onPressed: () => _launchURL('https://wa.me/c/918299743389'),
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.white, width: 2),
+                    side: BorderSide(color: AppStyles.primaryColor, width: 2),
                     padding: EdgeInsets.symmetric(
                       horizontal: 40,
                       vertical: screenWidth > 600 ? 20.0 : 15.0,
@@ -142,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                     'SHOP NOW',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.white,
+                      color: AppStyles.primaryColor,
                       letterSpacing: 1.5,
                     ),
                   ),
@@ -185,28 +175,27 @@ class _HomePageState extends State<HomePage> {
 
   void _startAutoScroll() {
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (_currentPage < 2) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
-      }
-
-      if (_pageController.hasClients) {
-        _pageController.animateToPage(
-          _currentPage,
-          duration: const Duration(milliseconds: 800),
-          curve: Curves.easeInOut,
-        );
+      if (mounted) {
+        setState(() {
+          // Banner items length is 3, so max index is 2
+          if (_currentPage < 2) {
+            _currentPage++;
+          } else {
+            _currentPage = 0;
+          }
+        });
       }
     });
   }
 
   Future<void> _launchURL(String url) async {
-    final Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      debugPrint('Could not launch $url');
+    try {
+      final Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      }
+    } catch (e) {
+      // Silently handle errors to prevent console spam
     }
   }
 
@@ -215,26 +204,13 @@ class _HomePageState extends State<HomePage> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'JASHN-E-FABRIC',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             _buildHeroBanner(screenWidth),
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
             _buildProductGrid(),
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
             const AppFooter(),
           ],
         ),
@@ -245,19 +221,17 @@ class _HomePageState extends State<HomePage> {
   Widget _buildHeroBanner(double screenWidth) {
     final List<Map<String, String>> bannerItems = [
       {
-        'image':
-            'https://source.unsplash.com/1600x900/?indian,embroidery,purple',
+        'image': 'assets/images/Gemini_Generated_Image_mczlkfmczlkfmczl.png',
         'title': 'ELEGANT EMBROIDERY',
         'subtitle': 'Discover our premium collection of hand-crafted designs',
       },
       {
-        'image':
-            'https://source.unsplash.com/1600x900/?traditional,white,indian',
+        'image': 'assets/images/Gemini_Generated_Image_q8e264q8e264q8e2.png',
         'title': 'TRADITIONAL CHARM',
         'subtitle': 'Timeless pieces that tell a story',
       },
       {
-        'image': 'https://source.unsplash.com/1600x900/?indian,fashion,yellow',
+        'image': 'assets/images/Gemini_Generated_Image_vm4m7lvm4m7lvm4m.png',
         'title': 'SPRING COLLECTION',
         'subtitle': 'Vibrant colors meet elegant designs',
       },
@@ -265,19 +239,22 @@ class _HomePageState extends State<HomePage> {
 
     // Prefetch next image
     if (_currentPage < bannerItems.length - 1) {
-      precacheImage(
-        CachedNetworkImageProvider(bannerItems[_currentPage + 1]['image']!),
-        context,
-      );
+      try {
+        precacheImage(
+          AssetImage(bannerItems[_currentPage + 1]['image']!),
+          context,
+        );
+      } catch (e) {
+        // Silently handle image precache errors
+      }
     }
 
-    return Container(
-      height: screenWidth * 0.75,
+    return SizedBox(
+      height: screenWidth * 0.60,
       child: Stack(
         children: [
           PageTransitionSwitcher(
             duration: const Duration(milliseconds: 800),
-            reverse: _currentPage < _previousPage,
             transitionBuilder: (child, animation, secondaryAnimation) {
               return SharedAxisTransition(
                 animation: animation,
@@ -286,7 +263,13 @@ class _HomePageState extends State<HomePage> {
                 child: child,
               );
             },
-            child: _buildCarouselPage(bannerItems[_currentPage], screenWidth),
+            child: _currentPage >= 0 && _currentPage < bannerItems.length
+                ? _buildCarouselPage(
+                    bannerItems[_currentPage],
+                    screenWidth,
+                    key: ValueKey(_currentPage),
+                  )
+                : const SizedBox.shrink(),
           ),
           // Dot indicators with spring animation
           Positioned(
@@ -310,25 +293,37 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildProductGrid() {
     const String catalogueLink = 'https://wa.me/c/918299743389';
+    final List<String> geminiImages = [
+      'assets/images/Gemini_Generated_Image_mczlkfmczlkfmczl.png',
+      'assets/images/Gemini_Generated_Image_q8e264q8e264q8e2.png',
+      'assets/images/Gemini_Generated_Image_vm4m7lvm4m7lvm4m.png',
+      'assets/images/ChatGPT Image Sep 14, 2025 at 06_20_19 PM.png',
+      'assets/images/Gemini_Generated_Image_90vvm490vvm490vv.png',
+    ];
     final List<Map<String, String>> products = [
       {
         'title': 'Festive Kurta Set',
-        'image': 'https://source.unsplash.com/800x1000/?indian,kurta',
+        'image': geminiImages[0],
         'link': catalogueLink,
       },
       {
-        'title': 'Handloom Saree',
-        'image': 'https://source.unsplash.com/800x1000/?saree,traditional',
+        'title': 'Handloom 3Pc Set',
+        'image': geminiImages[1],
         'link': catalogueLink,
       },
       {
-        'title': 'Embroidered Dupatta',
-        'image': 'https://source.unsplash.com/800x1000/?dupatta,scarf',
+        'title': 'Embroidered SKD',
+        'image': geminiImages[2],
         'link': catalogueLink,
       },
       {
-        'title': 'Silk Trousers',
-        'image': 'https://source.unsplash.com/800x1000/?palazzo,pants',
+        'title': 'Branded 3 Pcs Suit Set "Jainiiz"',
+        'image': geminiImages[3],
+        'link': catalogueLink,
+      },
+      {
+        'title': 'Embroidery 3 Pcs Suit',
+        'image': geminiImages[4],
         'link': catalogueLink,
       },
     ];
@@ -344,6 +339,7 @@ class _HomePageState extends State<HomePage> {
               fontSize: 24,
               fontWeight: FontWeight.bold,
               letterSpacing: 1,
+              color: Colors.black,
             ),
           ),
           const SizedBox(height: 10),
@@ -363,7 +359,7 @@ class _HomePageState extends State<HomePage> {
               final product = products[index];
               return _ProductCard(
                 title: product['title']!,
-                imageUrl: product['image']!,
+                imagePath: product['image']!,
                 whatsappLink: product['link']!,
               );
             },
@@ -376,21 +372,23 @@ class _HomePageState extends State<HomePage> {
 
 class _ProductCard extends StatelessWidget {
   final String title;
-  final String imageUrl;
+  final String imagePath;
   final String whatsappLink;
 
   const _ProductCard({
     required this.title,
-    required this.imageUrl,
+    required this.imagePath,
     required this.whatsappLink,
   });
 
   Future<void> _launchURL(String url) async {
-    final Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      debugPrint('Could not launch $url');
+    try {
+      final Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      }
+    } catch (e) {
+      // Silently handle errors to prevent console spam
     }
   }
 
@@ -405,15 +403,10 @@ class _ProductCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(4),
-                child: CachedNetworkImage(
-                  imageUrl: imageUrl,
+                child: Image.asset(
+                  imagePath,
                   fit: BoxFit.cover,
-                  placeholder: (context, url) => Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
-                    child: Container(color: Colors.white),
-                  ),
-                  errorWidget: (context, url, error) => Container(
+                  errorBuilder: (context, error, stackTrace) => Container(
                     color: Colors.grey[300],
                     child: const Icon(Icons.error),
                   ),
@@ -424,7 +417,7 @@ class _ProductCard extends StatelessWidget {
                   onTap: () => _launchURL(whatsappLink),
                   child: Container(
                     // ignore: deprecated_member_use
-                    color: Colors.black.withOpacity(0.1),
+                    color: AppStyles.secondaryColor.withOpacity(0.1),
                     child: Center(
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -433,13 +426,13 @@ class _ProductCard extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           // ignore: deprecated_member_use
-                          color: Colors.white.withOpacity(0.9),
+                          color: AppStyles.primaryColor.withOpacity(0.9),
                           borderRadius: BorderRadius.circular(2),
                         ),
-                        child: const Text(
+                        child: Text(
                           'VIEW ON WHATSAPP',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: AppStyles.secondaryColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                             letterSpacing: 1,
