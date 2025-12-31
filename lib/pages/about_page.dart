@@ -98,12 +98,4 @@ class AboutPage extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildImageDivider() {
-    return Container(
-      height: 250,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(color: Colors.grey[200]),
-    );
-  }
 }

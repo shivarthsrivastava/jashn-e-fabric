@@ -60,6 +60,7 @@ class AppDrawer extends StatelessWidget {
             title: const Text('Cart'),
             onTap: () {
               // TODO: Implement cart functionality
+
               Navigator.pop(context);
             },
           ),

@@ -33,7 +33,7 @@ class JashnEFabricApp extends StatelessWidget {
         colorScheme: AppStyles.colorScheme,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
-          color: Colors.white,
+          backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           elevation: 0,
           titleTextStyle: AppStyles.headingSmall,

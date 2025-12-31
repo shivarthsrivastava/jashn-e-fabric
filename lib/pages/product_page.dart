@@ -115,6 +115,7 @@ class ProductGridCard extends StatelessWidget {
                 child: InkWell(
                   onTap: () => _launchURL(product.whatsappLink),
                   child: Container(
+                    // ignore: deprecated_member_use
                     color: Colors.black.withOpacity(0.1),
                     child: Center(
                       child: Container(
@@ -123,6 +124,7 @@ class ProductGridCard extends StatelessWidget {
                           vertical: 10,
                         ),
                         decoration: BoxDecoration(
+                          // ignore: deprecated_member_use
                           color: Colors.white.withOpacity(0.95),
                           borderRadius: BorderRadius.circular(2),
                           boxShadow: [
